@@ -120,7 +120,11 @@ export default function ChatInterface({
     try {
       const { sendChatMessage } = await import("@/lib/api");
       const response = await sendChatMessage(text, messages, lang);
-      setMessages([...newHistory, { role: "assistant", content: response.reply }]);
+      const nextMessages = [...newHistory, { role: "assistant", content: response.reply }];
+      if (response.profile) {
+        nextMessages.push({ role: "system", content: JSON.stringify(response.profile) });
+      }
+      setMessages(nextMessages);
       onResponse(response);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Something went wrong";
@@ -201,7 +205,7 @@ export default function ChatInterface({
           </div>
         ) : (
           <>
-            {messages.map((msg, i) => (
+            {messages.filter(msg => msg.role !== "system").map((msg, i) => (
               <MessageBubble key={i} message={msg} index={i} />
             ))}
             {isLoading && <TypingIndicator />}

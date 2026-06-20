@@ -3635,7 +3635,9 @@ CHAT_REPLY_TEMPLATES = {
         "main_uncertainty": " The main uncertainty is: {missing}.",
         "do_meet": " You do meet: {criteria}.",
         "not_eligible": "Based on current information, you may not qualify for {name}.",
-        "key_unmet": " The key unmet requirement is: {missing}."
+        "key_unmet": " The key unmet requirement is: {missing}.",
+        "unsupported_country": "Thank you for reaching out! Unfortunately, we currently only support government welfare schemes for **India** and the **United States**. We don't have scheme data for {country} yet. We're working on expanding our coverage — please check back soon!",
+        "greeting": "Hello! I am Benefitor AI, your government welfare benefits navigator. Tell me a bit about yourself (such as your age, state, occupation, or family income) so I can help find benefits you may qualify for."
     },
     "hi": {
         "reply_header": "मैंने आपकी स्थिति की समीक्षा की है{context}।",
@@ -3655,7 +3657,9 @@ CHAT_REPLY_TEMPLATES = {
         "main_uncertainty": " मुख्य अनिश्चितता है: {missing}।",
         "do_meet": " आप पूरा करते हैं: {criteria}।",
         "not_eligible": "वर्तमान जानकारी के आधार पर, आप {name} के लिए अर्हता प्राप्त नहीं कर सकते हैं।",
-        "key_unmet": " मुख्य अपूर्ण आवश्यकता है: {missing}।"
+        "key_unmet": " मुख्य अपूर्ण आवश्यकता है: {missing}।",
+        "unsupported_country": "हमसे संपर्क करने के लिए धन्यवाद! दुर्भाग्य से, हम वर्तमान में केवल **भारत** और **संयुक्त राज्य अमेरिका** के लिए सरकारी कल्याण योजनाओं का समर्थन करते हैं। हमारे पास अभी {country} के लिए योजना डेटा नहीं है। हम अपना दायरा बढ़ाने पर काम कर रहे हैं — कृपया जल्द ही फिर से देखें!",
+        "greeting": "नमस्ते! मैं बेनिफिटर एआई हूँ, आपका सरकारी कल्याण योजना सहायक। मुझे अपने बारे में थोड़ा बताएं (जैसे आपकी आयु, राज्य, व्यवसाय या पारिवारिक आय) ताकि मैं उन योजनाओं को खोजने में मदद कर सकूँ जिनके लिए आप पात्र हो सकते हैं।"
     },
     "bn": {
         "reply_header": "আমি আপনার অবস্থা পর্যালোচনা করেছি {context}।",
@@ -3675,7 +3679,9 @@ CHAT_REPLY_TEMPLATES = {
         "main_uncertainty": " প্রধান অনিশ্চয়তা হল: {missing}।",
         "do_meet": " আপনি পূরণ করেছেন: {criteria}।",
         "not_eligible": "বর্তমান তথ্যের ভিত্তিতে, আপনি {name} এর জন্য যোগ্য নাও হতে পারেন।",
-        "key_unmet": " মূল পূরণ না হওয়া যোগ্যতা হল: {missing}।"
+        "key_unmet": " মূল পূরণ না হওয়া যোগ্যতা হল: {missing}।",
+        "unsupported_country": "আমাদের সাথে যোগাযোগ করার জন্য ধন্যবাদ! দুর্ভাগ্যবশত, আমরা বর্তমানে শুধুমাত্র **ভারত** এবং **মার্কিন যুক্তরাষ্ট্র** এর জন্য সরকারি কল্যাণ প্রকল্প সমর্থন করি। আমাদের কাছে এখনও {country}-এর জন্য কোনো প্রকল্পের তথ্য নেই। আমরা আমাদের পরিধি বাড়াতে কাজ করছি — অনুগ্রহ করে শীঘ্রই আবার দেখুন!",
+        "greeting": "নমস্কার! আমি বেনিফিটর এআই, আপনার সরকারি কল্যাণ প্রকল্প সহায়ক। আপনার সম্পর্কে কিছুটা বলুন (যেমন আপনার বয়স, রাজ্য, পেশা বা পারিবারিক আয়) যাতে আমি আপনার জন্য উপযুক্ত প্রকল্পগুলি খুঁজে পেতে সাহায্য করতে পারি।"
     },
     "ta": {
         "reply_header": "உங்கள் நிலையை நான் பரிசீலித்தேன் {context}.",
@@ -3695,7 +3701,9 @@ CHAT_REPLY_TEMPLATES = {
         "main_uncertainty": " முக்கிய நிச்சயமற்ற தன்மை: {missing}.",
         "do_meet": " நீங்கள் பூர்த்தி செய்தவை: {criteria}.",
         "not_eligible": "தற்போதைய தகவலின் அடிப்படையில், நீங்கள் {name} திட்டத்திற்குத் தகுதி பெறாமல் போகலாம்.",
-        "key_unmet": " பூர்த்தி செய்யப்படாத முக்கிய தேவை: {missing}."
+        "key_unmet": " பூர்த்தி செய்யப்படாத முக்கிய தேவை: {missing}.",
+        "unsupported_country": "எங்களைத் தொடர்பு கொண்டதற்கு நன்றி! துரதிர்ஷ்டவசமாக, நாங்கள் தற்போது **இந்தியா** மற்றும் **அமெரிக்கா** ஆகிய நாடுகளுக்கான அரசு நலத் திட்டங்களை மட்டுமே ஆதரிக்கிறோம். எங்களிடம் இன்னும் {country}-க்கான திட்டத் தரவு இல்லை. எங்கள் சேவையை விரிவுபடுத்த நாங்கள் பணியாற்றி வருகிறோம் — விரைவில் மீண்டும் சரிபார்க்கவும்!",
+        "greeting": "வணக்கம்! நான் பெனிஃபிட்டர் ஏআই, உங்கள் அரசு நலத்திட்ட உதவியாளர். உங்களைப் பற்றி கொஞ்சம் சொல்லுங்கள் (எ.கா. உங்கள் வயது, மாநிலம், தொழில் அல்லது குடும்ப வருமானம்) இதன் மூலம் நீங்கள் தகுதி பெறக்கூடிய திட்டங்களை நான் கண்டறிய உதவ முடியும்."
     },
     "te": {
         "reply_header": "నేను మీ పరిస్థితిని పరిశీలించాను {context}.",
@@ -3715,7 +3723,9 @@ CHAT_REPLY_TEMPLATES = {
         "main_uncertainty": " ప్రధాన సందేహం: {missing}.",
         "do_meet": " మీరు పూర్తి చేసినవి: {criteria}.",
         "not_eligible": "ప్రస్తుత సమాచారం ప్రకారం, మీరు {name} పథకానికి అర్హులు కాకపోవచ్చు.",
-        "key_unmet": " అర్హత లేని ముఖ్య కారణం: {missing}."
+        "key_unmet": " అర్హత లేని ముఖ్య कारणం: {missing}.",
+        "unsupported_country": "మమ్మల్ని సంప్రదించినందుకు ధన్యవాదాలు! దురదృష్టవశాత్తు, మేము ప్రస్తుతం **భారతదేశం** మరియు **యునైటెడ్ స్టేట్స్** కొరకు మాత్రమే ప్రభుత్వ సంక్షేమ పథకాలకు మద్దతు ఇస్తున్నాము. మా వద్ద ఇంకా {country} కొరకు పథకాల డేటా లేదు. మేము మా పరిధిని విస్తరించడానికి కృషి చేస్తున్నాము — దయచేసి త్వరలో మళ్లీ చూడండి!",
+        "greeting": "నమస్తే! నేను బెనిఫిటర్ ఐ, మీ సంక్షేమ పథకాల సహాయకుడిని. మీ గురించి కొంచెం చెప్పండి (ఉదాహరణకు మీ వయస్సు, రాష్ట్రం, వృత్తి లేదా కుటుంబ ఆదాయం) తద్వారా మీరు అర్హత పొందగల పథకాలను కనుగొనడంలో నేను సహాయపడగలను."
     },
     "mr": {
         "reply_header": "मी आपल्या परिस्थितीचा आढावा घेतला आहे {context}।",
@@ -3735,7 +3745,9 @@ CHAT_REPLY_TEMPLATES = {
         "main_uncertainty": " मुख्य अनिश्चितता आहे: {missing}।",
         "do_meet": " आपण पूर्ण करता: {criteria}।",
         "not_eligible": "सध्याच्या माहितीच्या आधारे, आपण {name} साठी पात्र नसू शकता।",
-        "key_unmet": " मुख्य अपूर्ण आवश्यकता आहे: {missing}।"
+        "key_unmet": " मुख्य अपूर्ण आवश्यकता आहे: {missing}।",
+        "unsupported_country": "आमच्याशी संपर्क साधल्याबद्दल धन्यवाद! दुर्दैवाने, आम्ही सध्या केवळ **भारत** आणि **युनायटेड स्टेट्स** साठी सरकारी कल्याणकारी योजनांचे समर्थन करतो. आमच्याकडे अद्याप {country} साठी योजना डेटा नाही. आम्ही आमच्या कव्हरेजचा विस्तार करण्याचे काम करत आहोत — कृपया लवकरच पुन्हा तपासा!",
+        "greeting": "नमस्कार! मी बेनिफिटर एआय आहे, तुमचा सरकारी कल्याणकारी योजना सहाय्यक. मला तुमच्याबद्दल थोडी माहिती सांगा (उदा. तुमचे वय, राज्य, व्यवसाय किंवा कौटुंबिक उत्पन्न) जेणेकरून मी तुमच्यासाठी योग्य योजना शोधण्यात मदत करू शकेन."
     },
     "gu": {
         "reply_header": "મેં તમારી પરિસ્થિતિની સમીક્ષા કરી છે {context}.",
@@ -3755,7 +3767,9 @@ CHAT_REPLY_TEMPLATES = {
         "main_uncertainty": " મુખ્ય અનિશ્ચિતતા છે: {missing}.",
         "do_meet": " તમે પૂર્ણ કરો છો: {criteria}.",
         "not_eligible": "વર્તમાન માહિતીના આધારે, તમે {name} માટે પાત્રતા ધરાવતા નથી.",
-        "key_unmet": " મુખ્ય અપૂર્ણ આવશ્યકતા છે: {missing}."
+        "key_unmet": " મુખ્ય અપૂર્ણ આવશ્યકતા છે: {missing}.",
+        "unsupported_country": "અમારો સંપર્ક કરવા બદલ આભાર! કમનસીબે, અમે હાલમાં ફક્ત **ભારત** અને **યુનાઇટેડ સ્ટેટ્સ** માટે સરકારી કલ્યાણ યોજનાઓને સમર્થન આપીએ છીએ. અમારી પાસે હજી સુધી {country} માટે યોજના ડેટา નથી. અમે અમારા કવરેજને વિસ્તારવા પર કામ કરી રહ્યા છીએ — કૃપા કરીને ટૂંક સમયમાં ફરી તપાસો!",
+        "greeting": "નમસ્તે! હું બેનિફિટર એઆઈ છું, તમારો સરકારી કલ્યાણ યોજના સહાયક. મને તમારા વિશે થોડી માહિતી જણાવો (જેમ કે તમારી ઉંમર, રાજ્ય, વ્યવસાય અથવા પારિવારિક આવક) જેથી હું તમારા માટે યોગ્ય યોજનાઓ શોધવામાં મદદ કરી શકું."
     },
     "pa": {
         "reply_header": "ਮੈਂ ਤੁਹਾਡੀ ਸਥਿਤੀ ਦੀ ਸਮੀਖਿਆ ਕੀਤੀ ਹੈ {context}।",
@@ -3775,7 +3789,9 @@ CHAT_REPLY_TEMPLATES = {
         "main_uncertainty": " ਮੁੱਖ ਅਨਿਸ਼ਚਿਤਤਾ ਹੈ: {missing}।",
         "do_meet": " ਤੁਸੀਂ ਪੂਰਾ ਕਰਦੇ ਹੋ: {criteria}।",
         "not_eligible": "ਮੌਜੂਦਾ ਜਾਣਕਾਰੀ ਦੇ ਅਧਾਰ 'ਤੇ, ਤੁਸੀਂ {name} ਲਈ ਯੋਗ ਨਹੀਂ ਹੋ ਸਕਦੇ।",
-        "key_unmet": " ਮੁੱਖ ਅਧੂਰੀ ਲੋੜ ਹੈ: {missing}।"
+        "key_unmet": " ਮੁੱਖ ਅਧੂਰੀ ਲੋੜ ਹੈ: {missing}।",
+        "unsupported_country": "ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰਨ ਲਈ ਧੰਨਵਾਦ! ਬਦਕਿਸਮਤੀ ਨਾਲ, ਅਸੀਂ ਵਰਤਮਾਨ ਵਿੱਚ ਕੇਵਲ **ਭਾਰਤ** ਅਤੇ **ਸੰਯੁਕਤ ਰਾਜ ਅਮਰੀਕਾ** ਲਈ ਸਰਕਾਰੀ ਭਲਾਈ ਸਕੀਮਾਂ ਦਾ ਸਮਰਥਨ ਕਰਦੇ ਹਾਂ। ਸਾਡੇ ਕੋਲ ਅਜੇ {country} ਲਈ ਸਕੀਮ ਦਾ ਡਾਟਾ ਨਹੀਂ ਹੈ। ਅਸੀਂ ਆਪਣੇ ਦਾਇਰੇ ਨੂੰ ਵਧਾਉਣ 'ਤੇ ਕੰਮ ਕਰ ਰਹੇ ਹਾਂ — ਕਿਰਪਾ ਕਰਕੇ ਜਲਦੀ ਹੀ ਦੁਬਾਰਾ ਚੈੱਕ ਕਰੋ!",
+        "greeting": "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਬੇਨੀਫਿਟਰ ਏਆਈ ਹਾਂ, ਤੁਹਾਡਾ ਸਰਕਾਰੀ ਭਲਾਈ ਸਕੀਮ ਸਹਾਇਕ। ਮੈਨੂੰ ਆਪਣੇ ਬਾਰੇ ਥੋੜ੍ਹਾ ਦੱਸੋ (ਜਿਵੇਂ ਕਿ ਤੁਹਾਡੀ ਉਮਰ, ਰਾਜ, ਕਿੱਤਾ, ਜਾਂ ਪਰਿਵਾਰਕ ਆਮਦਨ) ਤਾਂ ਜੋ ਮੈਂ ਉਨ੍ਹਾਂ ਸਕੀਮਾਂ ਨੂੰ ਲੱਭਣ ਵਿੱਚ ਮਦਦ ਕਰ ਸਕਾਂ ਜਿਨ੍ਹਾਂ ਲਈ ਤੁਸੀਂ ਯੋਗ ਹੋ ਸਕਦੇ ਹੋ।"
     }
 }
 
@@ -3943,6 +3959,18 @@ def build_chat_reply_translated(profile, results, missing, is_first_message: boo
     """Build dynamic chat reply template fully localized."""
     t_dict = CHAT_REPLY_TEMPLATES.get(lang, CHAT_REPLY_TEMPLATES["en"])
     
+    # Check if this is a first message or if we have no meaningful profile parameters extracted yet
+    meaningful_fields = [
+        "age", "state", "district", "occupation", "annual_income",
+        "category", "student_status", "farmer_status", "housing_status",
+        "land_ownership", "disability_status", "senior_citizen_status",
+        "gender", "bpl_card", "ration_card"
+    ]
+    has_meaningful_data = any(getattr(profile, f, None) is not None for f in meaningful_fields)
+    
+    if is_first_message or not has_meaningful_data:
+        return t_dict["greeting"]
+
     eligible = [r for r in results if r.status in ("Likely Eligible", "Possibly Eligible")]
     count = len(eligible)
     
@@ -3958,7 +3986,11 @@ def build_chat_reply_translated(profile, results, missing, is_first_message: boo
         translated_occ = translate_occupation(profile.occupation, lang)
         parts.append(t_dict["context_occupation"].format(occupation=translated_occ))
     if profile.annual_income:
-        parts.append(t_dict["context_income"].format(income=profile.annual_income))
+        income_fmt = t_dict["context_income"]
+        # Handle USD currency formatting symbol for US users
+        if (profile.country or "").lower().strip() == "us":
+            income_fmt = income_fmt.replace("₹", "$").replace("\u20b9", "$")
+        parts.append(income_fmt.format(income=profile.annual_income))
         
     # Combine context
     # E.g. "मैंने आपकी स्थिति पश्चिम बंगाल में, एक छात्र के रूप में, \u20b9150,000 की वार्षिक आय के साथ की समीक्षा की है।"

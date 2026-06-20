@@ -9,7 +9,7 @@ import json
 import logging
 from fastapi import APIRouter
 from models import ChatRequest, ChatResponse, UserProfile, MatchResult
-from profile_extractor import extract_profile_from_text, merge_profiles, _heuristic_followup
+from profile_extractor import extract_profile_from_text, merge_profiles, _heuristic_followup, SUPPORTED_COUNTRIES
 from eligibility_engine import evaluate_all_schemes, get_missing_fields
 from i18n import build_chat_reply_translated, translate_match_result
 
@@ -105,10 +105,11 @@ async def chat(request: ChatRequest):
     All other logic is deterministic.
     """
 
-    # ── 1. Build context text ─────────────────────────────────────────────────
+    # ── 1. Build context text (filter out system/profile messages for LLM context) ──
+    chat_history = [m for m in request.conversation_history if m.role != "system"]
     history_text = "\n".join(
         f"{m.role.title()}: {m.content}"
-        for m in request.conversation_history[-6:]
+        for m in chat_history[-6:]
     )
     full_text = f"{history_text}\nUser: {request.message}" if history_text else request.message
 
@@ -130,7 +131,24 @@ async def chat(request: ChatRequest):
     else:
         merged = new_profile
 
-    # ── 4. Evaluate schemes (rule-based, instant) ─────────────────────────────
+    # ── 3.5. Unsupported country check ────────────────────────────────────────
+    user_country = (merged.country or "").lower().strip()
+    if user_country and user_country not in SUPPORTED_COUNTRIES:
+        from i18n import CHAT_REPLY_TEMPLATES
+        lang = request.lang or "en"
+        t_dict = CHAT_REPLY_TEMPLATES.get(lang, CHAT_REPLY_TEMPLATES["en"])
+        # Format country name nicely for display
+        display_country = user_country.replace("_", " ").title()
+        unsupported_reply = t_dict["unsupported_country"].format(country=display_country)
+        return ChatResponse(
+            reply=unsupported_reply,
+            profile=merged,
+            follow_up_question=None,
+            recommendations=[],
+            profile_complete=False,
+        )
+
+    # ── 4. Evaluate schemes (rule-based, instant, country-filtered) ───────────
     results = evaluate_all_schemes(merged)
     missing = get_missing_fields(merged)
 

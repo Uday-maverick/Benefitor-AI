@@ -43,9 +43,14 @@ const FIELD_ICONS: Record<string, React.ReactNode> = {
   bpl_card:              <FileText size={13} />,
 };
 
-function formatValue(key: string, value: unknown, trEx: any): string {
+function formatValue(key: string, value: unknown, trEx: any, country: string | null | undefined): string {
   if (value === null || value === undefined) return "";
-  if (key === "annual_income") return `₹${(value as number).toLocaleString("en-IN")}`;
+  if (key === "annual_income") {
+    const isUs = (country || "").toLowerCase().trim() === "us";
+    const symbol = isUs ? "$" : "₹";
+    const locale = isUs ? "en-US" : "en-IN";
+    return `${symbol}${(value as number).toLocaleString(locale)}`;
+  }
   if (typeof value === "boolean") return value ? trEx.yes : trEx.no;
   if (typeof value === "string")
     return value.charAt(0).toUpperCase() + value.slice(1).replace(/_/g, " ");
@@ -107,7 +112,7 @@ export default function ProfileSummary({ profile }: ProfileSummaryProps) {
                 {trEx[key as keyof typeof trEx] ?? key}
               </p>
               <p className="text-xs font-medium truncate" style={{ color: "hsl(var(--tx))" }}>
-                {formatValue(key, value, trEx)}
+                {formatValue(key, value, trEx, profile.country)}
               </p>
             </div>
           </div>

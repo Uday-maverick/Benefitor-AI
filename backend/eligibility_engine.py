@@ -141,9 +141,25 @@ def evaluate_scheme(profile: UserProfile, scheme: Scheme) -> MatchResult:
 def evaluate_all_schemes(profile: UserProfile) -> list[MatchResult]:
     """
     Evaluate a UserProfile against all known schemes.
+    Country-aware filtering: only evaluates schemes relevant to the user's country.
     Returns results sorted by score (highest first).
     """
-    results = [evaluate_scheme(profile, scheme) for scheme in SCHEMES]
+    country = (profile.country or "").lower().strip()
+
+    if country == "us":
+        # Only evaluate US schemes
+        filtered = [s for s in SCHEMES if s.id.startswith("us-")]
+    elif country == "india":
+        # Only evaluate Indian schemes
+        filtered = [s for s in SCHEMES if not s.id.startswith("us-")]
+    elif country and country not in ("us", "india"):
+        # Unsupported country — return empty (chat route will handle messaging)
+        return []
+    else:
+        # Country unknown — evaluate all schemes (backward compatible)
+        filtered = SCHEMES
+
+    results = [evaluate_scheme(profile, scheme) for scheme in filtered]
     results.sort(key=lambda r: (r.score, r.confidence), reverse=True)
     return results
 
@@ -154,7 +170,7 @@ def get_missing_fields(profile: UserProfile) -> list[str]:
     and are important for determining eligibility.
     """
     important_fields = [
-        "age", "state", "occupation", "annual_income",
+        "country", "age", "state", "occupation", "annual_income",
         "student_status", "farmer_status", "housing_status",
         "senior_citizen_status", "disability_status",
     ]

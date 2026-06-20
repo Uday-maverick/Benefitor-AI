@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 # ─── User Profile ─────────────────────────────────────────────────────────────
 
 class UserProfile(BaseModel):
+    country: Optional[str] = None             # "india", "us", or other country name
     age: Optional[int] = None
     state: Optional[str] = None
     district: Optional[str] = None

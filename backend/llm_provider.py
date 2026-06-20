@@ -7,9 +7,13 @@ DESIGN PRINCIPLE: Only ONE LLM call per user turn.
 The single call extracts the profile AND generates the reply in one shot.
 All scheme matching and explanation generation is purely rule-based.
 """
+# NOTE: LRU cache added to reduce redundant LLM calls for repeated/similar messages.
 import os
 import json
+import hashlib
 import logging
+import time
+from collections import OrderedDict
 from typing import Optional
 from google import genai
 from google.genai import types
@@ -66,6 +70,7 @@ async def call_llm(prompt: str, temperature: float = 0.3) -> Optional[str]:
 PROFILE_SCHEMA = types.Schema(
     type=types.Type.OBJECT,
     properties={
+        "country": types.Schema(type=types.Type.STRING, nullable=True),
         "age": types.Schema(type=types.Type.INTEGER, nullable=True),
         "state": types.Schema(type=types.Type.STRING, nullable=True),
         "district": types.Schema(type=types.Type.STRING, nullable=True),
@@ -85,12 +90,51 @@ PROFILE_SCHEMA = types.Schema(
 )
 
 
+# ─── LRU Cache for LLM JSON responses ─────────────────────────────────────────
+_LLM_CACHE_MAX = 128
+_LLM_CACHE_TTL = 300  # 5 minutes
+_llm_cache: OrderedDict[str, tuple[float, dict]] = OrderedDict()
+
+
+def _cache_key(prompt: str) -> str:
+    """Generate a stable cache key from prompt text."""
+    return hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+
+
+def _cache_get(key: str) -> Optional[dict]:
+    """Return cached value if it exists and hasn't expired."""
+    if key in _llm_cache:
+        ts, val = _llm_cache[key]
+        if time.time() - ts < _LLM_CACHE_TTL:
+            _llm_cache.move_to_end(key)
+            return val
+        else:
+            del _llm_cache[key]
+    return None
+
+
+def _cache_put(key: str, val: dict) -> None:
+    """Store a value in the cache, evicting oldest if full."""
+    _llm_cache[key] = (time.time(), val)
+    _llm_cache.move_to_end(key)
+    while len(_llm_cache) > _LLM_CACHE_MAX:
+        _llm_cache.popitem(last=False)
+
+
 async def call_llm_json(prompt: str, schema: Optional[types.Schema] = None) -> Optional[dict]:
     """
     Call the LLM and parse JSON from the response.
     Uses Gemini's native JSON response mode for guaranteed valid JSON output.
     When a schema is provided, uses response_schema for structured output.
+    Results are cached by prompt hash to avoid redundant LLM calls.
     """
+    # Check cache first
+    key = _cache_key(prompt)
+    cached = _cache_get(key)
+    if cached is not None:
+        logger.info("LLM cache hit — skipping API call")
+        return cached
+
     client = _get_client()
     if not client:
         return None
@@ -110,7 +154,9 @@ async def call_llm_json(prompt: str, schema: Optional[types.Schema] = None) -> O
             config=types.GenerateContentConfig(**config_kwargs),
         )
         raw = response.text.strip()
-        return json.loads(raw)
+        result = json.loads(raw)
+        _cache_put(key, result)
+        return result
 
     except json.JSONDecodeError as e:
         logger.error(f"JSON parse failed: {e}\nRaw: {raw[:500]}")
