@@ -62,3 +62,47 @@ def test_eligibility_engine_not_eligible():
     pm_kisan_res = next((r for r in results if r.scheme_id == "pm-kisan"), None)
     assert pm_kisan_res is not None
     assert pm_kisan_res.status == "Likely Not Eligible"
+
+def test_eligibility_engine_us():
+    # Test profile eligible for US Medicaid & SNAP
+    profile = UserProfile(
+        age=30,
+        state="California",
+        annual_income=28000,
+    )
+    results = evaluate_all_schemes(profile)
+    
+    medicaid_res = next((r for r in results if r.scheme_id == "us-medicaid"), None)
+    snap_res = next((r for r in results if r.scheme_id == "us-snap"), None)
+    
+    assert medicaid_res is not None
+    assert medicaid_res.status == "Likely Eligible"
+    assert snap_res is not None
+    assert snap_res.status == "Likely Eligible"
+
+def test_geo_filtering():
+    # Test that a US user is ineligible for Indian schemes
+    profile_us = UserProfile(
+        age=35,
+        state="Texas",
+        occupation="farmer",
+        annual_income=25000,
+        farmer_status=True,
+        land_ownership=True
+    )
+    results_us = evaluate_all_schemes(profile_us)
+    pm_kisan_res = next((r for r in results_us if r.scheme_id == "pm-kisan"), None)
+    assert pm_kisan_res is not None
+    assert pm_kisan_res.status == "Likely Not Eligible" # Disqualified due to state
+
+    # Test that an Indian user is ineligible for US schemes
+    profile_in = UserProfile(
+        age=30,
+        state="Maharashtra",
+        annual_income=30000, # Looks low enough for US, but should fail due to state
+    )
+    results_in = evaluate_all_schemes(profile_in)
+    medicaid_res = next((r for r in results_in if r.scheme_id == "us-medicaid"), None)
+    assert medicaid_res is not None
+    assert medicaid_res.status == "Likely Not Eligible" # Disqualified due to state
+

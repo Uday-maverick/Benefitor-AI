@@ -11,23 +11,23 @@ logger = logging.getLogger(__name__)
 
 # ─── LLM Extraction ───────────────────────────────────────────────────────────
 
-EXTRACTION_PROMPT = """You are a welfare benefits assistant for India. Extract structured information from the user's message below.
+EXTRACTION_PROMPT = """You are a welfare benefits assistant for India and the United States. Extract structured information from the user's message below.
 
 Extract these fields if mentioned:
 - age (integer, years)
-- state (Indian state name, string)
-- district (string)
+- state (Indian or US state name, e.g. California, Texas, Punjab, Maharashtra, string)
+- district (string, e.g. city or county if in the US)
 - occupation (string: student, farmer, labourer, self-employed, government-employee, unemployed, retired, other)
-- annual_income (integer, in INR per year — convert if monthly given)
+- annual_income (integer, in the user's currency - INR or USD - per year — convert if monthly given. Do not write currency symbols)
 - category (string: general, obc, sc, st, minority)
 - student_status (boolean: true if enrolled in school/college)
 - farmer_status (boolean: true if engaged in farming)
 - housing_status (string: pucca, kutcha, rented, homeless)
 - land_ownership (boolean: true if owns agricultural land)
 - disability_status (boolean)
-- senior_citizen_status (boolean: true if age >= 60)
+- senior_citizen_status (boolean: true if age >= 60 or age >= 65)
 - gender (string: male, female, other)
-- bpl_card (boolean: true if has BPL/ration card)
+- bpl_card (boolean: true if has BPL/ration card or is considered low-income/below federal poverty level)
 
 Return a JSON object with only the fields you can confidently extract. Use null for fields not mentioned.
 
@@ -148,7 +148,7 @@ def _heuristic_extract(text: str) -> UserProfile:
     if any(w in t for w in ["bpl", "below poverty", "ration card"]):
         profile_data["bpl_card"] = True
 
-    # State detection (common Indian states)
+    # State detection (common Indian and US states)
     states = [
         "andhra pradesh", "arunachal pradesh", "assam", "bihar", "chhattisgarh",
         "goa", "gujarat", "haryana", "himachal pradesh", "jharkhand", "karnataka",
@@ -156,6 +156,9 @@ def _heuristic_extract(text: str) -> UserProfile:
         "mizoram", "nagaland", "odisha", "punjab", "rajasthan", "sikkim",
         "tamil nadu", "telangana", "tripura", "uttar pradesh", "uttarakhand",
         "west bengal", "delhi",
+        "california", "texas", "new york", "florida", "illinois", "pennessee",
+        "pennsylvania", "ohio", "georgia", "north carolina", "michigan",
+        "washington", "massachusetts", "new jersey", "virginia", "colorado",
     ]
     for state in states:
         if state in t:

@@ -3,6 +3,16 @@ Schemes knowledge base — 5 MVP welfare schemes with structured eligibility rul
 """
 from models import Scheme, EligibilityRule
 
+US_STATES = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+    "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
+    "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+    "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+]
+
 SCHEMES: list[Scheme] = [
 
     # ─── 1. PM-KISAN ──────────────────────────────────────────────────────────
@@ -1121,9 +1131,172 @@ SCHEMES: list[Scheme] = [
         ministry="Ministry of Rural Development",
     ),
 
+    # ─── 41. US Medicaid ─────────────────────────────────────────────────────
+    Scheme(
+        id="us-medicaid",
+        name="Medicaid (US Healthcare)",
+        category="healthcare",
+        summary="Medicaid provides free or low-cost health coverage to eligible low-income individuals, families, children, pregnant women, the elderly, and people with disabilities.",
+        eligibility_rules=[
+            EligibilityRule(
+                field="state",
+                operator="in",
+                value=US_STATES,
+                label="Must live in the United States",
+                weight=1.0,
+                required=True,
+            ),
+            EligibilityRule(
+                field="annual_income",
+                operator="lte",
+                value=40000,
+                label="Household annual income should not exceed $40,000 (standard state threshold)",
+                weight=1.5,
+                required=True,
+            ),
+        ],
+        documents_required=["Social Security Number (SSN)", "Proof of Income (W-2 / Pay stubs)", "Proof of U.S. Citizenship or Legal Residency", "Government-issued Photo ID"],
+        official_url="https://www.medicaid.gov",
+        benefit_amount="Free or low-cost comprehensive healthcare coverage",
+        ministry="U.S. Department of Health and Human Services",
+    ),
 
-    # ─── 21. PMFBY (Pradhan Mantri Fasal Bima Yojana) ──────────────────────────
-    ]
+    # ─── 42. US SNAP (Food Stamps) ───────────────────────────────────────────
+    Scheme(
+        id="us-snap",
+        name="SNAP (Supplemental Nutrition Assistance Program)",
+        category="healthcare",
+        summary="SNAP provides food-purchasing assistance to supplement the food budget of needy families so they can purchase healthy food and move towards self-sufficiency.",
+        eligibility_rules=[
+            EligibilityRule(
+                field="state",
+                operator="in",
+                value=US_STATES,
+                label="Must live in the United States",
+                weight=1.0,
+                required=True,
+            ),
+            EligibilityRule(
+                field="annual_income",
+                operator="lte",
+                value=30000,
+                label="Gross annual household income should be below $30,000 (roughly 130% of the Federal Poverty Level)",
+                weight=1.5,
+                required=True,
+            ),
+        ],
+        documents_required=["Social Security Number (SSN)", "Proof of Income", "Proof of Identity", "Utility and Rent bills (to calculate deductions)"],
+        official_url="https://www.fns.usda.gov/snap",
+        benefit_amount="Monthly balance deposited to Electronic Benefit Transfer (EBT) card",
+        ministry="U.S. Department of Agriculture (USDA)",
+    ),
+
+    # ─── 43. Federal Pell Grant ──────────────────────────────────────────────
+    Scheme(
+        id="us-pell-grant",
+        name="Federal Pell Grant",
+        category="education",
+        summary="Federal Pell Grants are direct grants awarded to undergraduate students who display exceptional financial need and have not earned a bachelor's or professional degree.",
+        eligibility_rules=[
+            EligibilityRule(
+                field="state",
+                operator="in",
+                value=US_STATES,
+                label="Must live in the United States",
+                weight=1.0,
+                required=True,
+            ),
+            EligibilityRule(
+                field="student_status",
+                operator="is_true",
+                value=True,
+                label="Must be an enrolled undergraduate student",
+                weight=2.0,
+                required=True,
+            ),
+            EligibilityRule(
+                field="annual_income",
+                operator="lte",
+                value=60000,
+                label="Total family annual income must not exceed $60,000",
+                weight=1.5,
+                required=True,
+            ),
+        ],
+        documents_required=["Free Application for Federal Student Aid (FAFSA) confirmation", "Tax Returns / W-2 forms", "High School Diploma or equivalent"],
+        official_url="https://studentaid.gov",
+        benefit_amount="Up to $7,395 per academic year for tuition and college expenses",
+        ministry="U.S. Department of Education",
+    ),
+
+    # ─── 44. Section 8 Housing Voucher ───────────────────────────────────────
+    Scheme(
+        id="us-section-8",
+        name="Section 8 (Housing Choice Voucher Program)",
+        category="housing",
+        summary="The housing choice voucher program is the federal government's major program for assisting very low-income families, the elderly, and the disabled to afford decent, safe, and sanitary housing.",
+        eligibility_rules=[
+            EligibilityRule(
+                field="state",
+                operator="in",
+                value=US_STATES,
+                label="Must live in the United States",
+                weight=1.0,
+                required=True,
+            ),
+            EligibilityRule(
+                field="housing_status",
+                operator="in",
+                value=["rented", "homeless"],
+                label="Must be a tenant renting or currently homeless",
+                weight=2.0,
+                required=True,
+            ),
+            EligibilityRule(
+                field="annual_income",
+                operator="lte",
+                value=45000,
+                label="Gross annual household income should be below $45,000 (varies by county, typically below 50% of local median income)",
+                weight=1.5,
+                required=True,
+            ),
+        ],
+        documents_required=["Proof of Income", "Social Security Numbers for all household members", "Rental History and references", "U.S. Citizenship or eligible immigration status"],
+        official_url="https://www.hud.gov",
+        benefit_amount="Subsidy paid directly to landlord covering a portion of rent",
+        ministry="U.S. Department of Housing and Urban Development (HUD)",
+    ),
+
+    # ─── 45. Supplemental Security Income (SSI) ──────────────────────────────
+    Scheme(
+        id="us-ssi",
+        name="Supplemental Security Income (SSI)",
+        category="pension",
+        summary="SSI is a federal program designed to help aged, blind, and disabled people who have little or no income by providing monthly cash support.",
+        eligibility_rules=[
+            EligibilityRule(
+                field="state",
+                operator="in",
+                value=US_STATES,
+                label="Must live in the United States",
+                weight=1.0,
+                required=True,
+            ),
+            EligibilityRule(
+                field="annual_income",
+                operator="lte",
+                value=25000,
+                label="Gross annual household income must not exceed $25,000",
+                weight=1.5,
+                required=True,
+            ),
+        ],
+        documents_required=["Social Security Number (SSN)", "Proof of Age (Birth certificate)", "Medical records of disability (if under 65)", "Bank statements / Proof of assets"],
+        official_url="https://www.ssa.gov",
+        benefit_amount="Up to $943 per month for an individual or $1,415 per month for a couple",
+        ministry="U.S. Social Security Administration (SSA)",
+    ),
+]
 
 # Fast lookup map
 SCHEMES_BY_ID: dict[str, Scheme] = {s.id: s for s in SCHEMES}

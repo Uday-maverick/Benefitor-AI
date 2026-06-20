@@ -3,7 +3,7 @@ Rule-based deterministic eligibility engine.
 Evaluates a UserProfile against all schemes and returns MatchResult objects.
 """
 from models import UserProfile, Scheme, MatchResult, EligibilityRule
-from schemes_db import SCHEMES
+from schemes_db import SCHEMES, US_STATES
 
 
 def _evaluate_rule(rule: EligibilityRule, profile: UserProfile) -> tuple[bool, bool]:
@@ -52,6 +52,19 @@ def evaluate_scheme(profile: UserProfile, scheme: Scheme) -> MatchResult:
     matched_rules: list[str] = []
     missing_rules: list[str] = []
     failed_required: list[str] = []
+
+    # Programmatic Geo-filtering
+    # If the user lives in a US state, they are ineligible for all Indian schemes.
+    # If the user lives in an Indian state, they are ineligible for all US schemes.
+    if profile.state:
+        state_lower = profile.state.lower()
+        is_us_state = any(state_lower == s.lower() for s in US_STATES)
+        is_us_scheme = scheme.id.startswith("us-")
+        
+        if is_us_state and not is_us_scheme:
+            failed_required.append("Must live in India")
+        elif not is_us_state and is_us_scheme:
+            failed_required.append("Must live in the United States")
 
     total_weight = 0.0
     matched_weight = 0.0
