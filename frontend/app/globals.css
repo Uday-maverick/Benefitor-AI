@@ -1,0 +1,318 @@
+@import "tailwindcss";
+
+/* ─── Google Fonts ───────────────────────────────────────────────────────────── */
+/* Noto Sans covers Devanagari, Bengali, Tamil, Telugu, Gujarati, Kannada, Gurmukhi */
+
+/* ─── Design Tokens — LIGHT MODE ────────────────────────────────────────────── */
+:root {
+  --font-sans: 'Noto Sans', 'Inter', system-ui, sans-serif;
+
+  /* Brand */
+  --blue:      220 75% 48%;
+  --blue-dim:  220 65% 38%;
+  --blue-hi:   220 85% 58%;
+  --green:     152 55% 38%;
+  --amber:      38 85% 44%;
+  --red:         0 62% 46%;
+  --purple:    252 55% 55%;
+
+  /* Surfaces — light, warm white */
+  --bg:        220 22% 97%;
+  --s1:        0   0% 100%;
+  --s2:        220 18% 95%;
+  --s3:        220 15% 90%;
+  --border:    220 14% 86%;
+  --border-hi: 220 16% 76%;
+
+  /* Text — near-black, high contrast for readability */
+  --tx:        222 30% 10%;
+  --tx-2:      222 18% 35%;
+  --tx-3:      222 12% 55%;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 3px hsl(220 20% 12% / 0.08), 0 1px 2px hsl(220 20% 12% / 0.05);
+  --shadow-md: 0 4px 16px hsl(220 20% 12% / 0.10), 0 2px 4px hsl(220 20% 12% / 0.06);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: hsl(var(--bg));
+  color: hsl(var(--tx));
+  min-height: 100svh;
+  /* 17px base — bigger than standard, helps less-literate users */
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+p, li, dd { text-wrap: pretty; }
+
+/* Tabular numbers for counters / scores */
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: hsl(var(--s2)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--border-hi)); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--tx-3)); }
+
+/* ─── Selection ──────────────────────────────────────────────────────────────── */
+::selection {
+  background: hsl(var(--blue) / 0.18);
+  color: hsl(var(--tx));
+}
+
+/* ─── Focus ring — important for accessibility ───────────────────────────────── */
+:focus-visible {
+  outline: 3px solid hsl(var(--blue) / 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────────── */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 1; }
+  40%           { opacity: 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-in {
+  animation: fadeSlideIn 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Card ───────────────────────────────────────────────────────────────────── */
+.card {
+  background: hsl(var(--s1));
+  border: 1.5px solid hsl(var(--border));
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── Chip ───────────────────────────────────────────────────────────────────── */
+.chip {
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Status badges ──────────────────────────────────────────────────────────── */
+.badge-eligible {
+  background: hsl(var(--green) / 0.10);
+  border: 1.5px solid hsl(var(--green) / 0.30);
+  color: hsl(var(--green));
+}
+.badge-possibly {
+  background: hsl(var(--amber) / 0.10);
+  border: 1.5px solid hsl(var(--amber) / 0.30);
+  color: hsl(var(--amber));
+}
+.badge-not-eligible {
+  background: hsl(var(--red) / 0.08);
+  border: 1.5px solid hsl(var(--red) / 0.25);
+  color: hsl(var(--red));
+}
+
+/* ─── Score bar ──────────────────────────────────────────────────────────────── */
+.score-bar {
+  height: 5px;
+  background: hsl(var(--s3));
+  border-radius: 10px;
+  overflow: hidden;
+}
+.score-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: hsl(var(--blue));
+  transition: width 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─── Shimmer skeleton ───────────────────────────────────────────────────────── */
+.shimmer {
+  background: linear-gradient(90deg,
+    hsl(var(--s2)) 25%,
+    hsl(var(--s3)) 50%,
+    hsl(var(--s2)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* ─── Typing indicator ───────────────────────────────────────────────────────── */
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--blue));
+  animation: blink 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ─── Button — large touch targets for farmer accessibility ──────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* 44px min height — WCAG touch target */
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.9375rem;  /* 15px */
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition-property: background-color, color, border-color, transform, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+  text-decoration: none;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+
+.btn-primary {
+  background: hsl(var(--blue));
+  color: #fff;
+  box-shadow: 0 2px 8px hsl(var(--blue) / 0.28);
+}
+.btn-primary:hover:not(:disabled) { background: hsl(var(--blue-dim)); }
+
+.btn-ghost {
+  background: hsl(var(--s1));
+  color: hsl(var(--tx-2));
+  border-color: hsl(var(--border));
+}
+.btn-ghost:hover:not(:disabled) {
+  background: hsl(var(--s2));
+  color: hsl(var(--tx));
+  border-color: hsl(var(--border-hi));
+}
+
+/* ─── Nav link ───────────────────────────────────────────────────────────────── */
+.nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--tx-2));
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  transition-property: background-color, color;
+  transition-duration: 130ms;
+  transition-timing-function: ease-out;
+}
+.nav-link:hover {
+  background: hsl(var(--s2));
+  color: hsl(var(--tx));
+}
+
+/* ─── Language button ───────────────────────────────────────────────────────── */
+.lang-btn {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  border: 1.5px solid hsl(var(--border));
+  background: hsl(var(--s1));
+  color: hsl(var(--tx));
+  transition-property: background-color, border-color;
+  transition-duration: 130ms;
+  transition-timing-function: ease-out;
+}
+.lang-btn:hover {
+  background: hsl(var(--s2));
+  border-color: hsl(var(--border-hi));
+}
+
+/* ─── Category accent colors ─────────────────────────────────────────────────── */
+.cat-farmer     { color: hsl(152 55% 38%); }
+.cat-housing    { color: hsl(220 75% 48%); }
+.cat-healthcare { color: hsl(338 65% 50%); }
+.cat-pension    { color: hsl( 38 85% 44%); }
+.cat-education  { color: hsl(252 55% 55%); }
+
+/* ─── Large example button — farmer-friendly ─────────────────────────────────── */
+.example-btn {
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  border: 1.5px solid hsl(var(--border));
+  background: hsl(var(--s1));
+  color: hsl(var(--tx-2));
+  cursor: pointer;
+  transition-property: background-color, border-color, color;
+  transition-duration: 130ms;
+  transition-timing-function: ease-out;
+  line-height: 1.5;
+}
+.example-btn:hover {
+  background: hsl(var(--blue) / 0.05);
+  border-color: hsl(var(--blue) / 0.40);
+  color: hsl(var(--tx));
+}
+
+/* ─── Message bubbles ───────────────────────────────────────────────────────── */
+.bubble-user {
+  background: hsl(var(--blue));
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+.bubble-ai {
+  background: hsl(var(--s1));
+  border: 1.5px solid hsl(var(--border));
+  color: hsl(var(--tx));
+  border-bottom-left-radius: 4px;
+}
+
+/* ─── Input wrapper ─────────────────────────────────────────────────────────── */
+.input-wrap {
+  background: hsl(var(--s1));
+  border: 2px solid hsl(var(--border));
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition-property: border-color, box-shadow;
+  transition-duration: 150ms;
+}
+.input-wrap:focus-within {
+  border-color: hsl(var(--blue) / 0.50);
+  box-shadow: 0 0 0 3px hsl(var(--blue) / 0.10);
+}

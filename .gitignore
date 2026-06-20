@@ -1,0 +1,86 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Next.js build output
+.next/
+out/
+build/
+
+# Python cache and files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Python virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Environment/Secret files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.sample
+backend/.env
+frontend/.env.local
+
+# Scratch and debug files
+backend/search_transcript.py
+backend/find_templates*.py
+backend/step_259_content.txt
+backend/step_460_content.txt
+backend/step_461_tool_call_0.txt
+backend/step_470_tool_call_0.txt
+backend/step_480_tool_call_0.txt
+backend/step_481_content.txt
+backend/step_490_tool_call_0.txt
+backend/step_496_content.txt
+backend/step_505_content.txt
+backend/step_516_tool_call_0.txt
+backend/step_51_raw.txt
+backend/step_523_tool_call_0.txt
+backend/step_529_content.txt
+backend/step_538_content.txt
+backend/step_538_tool_call_0.txt
+backend/step_540_content.txt
+backend/step_547_content.txt
+backend/step_550_content.txt
+backend/step_550_tool_call_0.txt
+backend/step_568_content.txt
+backend/step_568_tool_call_0.txt
+backend/step_569_content.txt
+backend/step_574_content.txt
+backend/step_575_content.txt
+backend/step_577_content.txt
+backend/step_577_tool_call_0.txt
+backend/step_583_content.txt
+backend/step_584_tool_call_0.txt
+backend/step_594_content.txt
+backend/step_595_content.txt
+backend/step_595_tool_call_0.txt
+backend/step_605_content.txt
