@@ -1,6 +1,7 @@
 // Shared TypeScript types matching the FastAPI Pydantic models
 
 export interface UserProfile {
+  country?: string | null;
   age?: number | null;
   state?: string | null;
   district?: string | null;
@@ -33,7 +34,7 @@ export interface MatchResult {
 }
 
 export interface ChatMessage {
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   content: string;
 }
 

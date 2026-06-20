@@ -120,7 +120,7 @@ export default function ChatInterface({
     try {
       const { sendChatMessage } = await import("@/lib/api");
       const response = await sendChatMessage(text, messages, lang);
-      const nextMessages = [...newHistory, { role: "assistant", content: response.reply }];
+      const nextMessages: ChatMessage[] = [...newHistory, { role: "assistant", content: response.reply }];
       if (response.profile) {
         nextMessages.push({ role: "system", content: JSON.stringify(response.profile) });
       }
