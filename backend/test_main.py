@@ -106,3 +106,26 @@ def test_geo_filtering():
     assert medicaid_res is not None
     assert medicaid_res.status == "Likely Not Eligible" # Disqualified due to state
 
+
+def test_eligibility_engine_new_us():
+    # Test profile eligible for us-wic, us-lifeline, and us-child-care-subsidy
+    profile = UserProfile(
+        age=8,
+        state="Texas",
+        annual_income=15000,
+        student_status=True,
+    )
+    results = evaluate_all_schemes(profile)
+    
+    wic_res = next((r for r in results if r.scheme_id == "us-wic"), None)
+    lifeline_res = next((r for r in results if r.scheme_id == "us-lifeline"), None)
+    ccdf_res = next((r for r in results if r.scheme_id == "us-child-care-subsidy"), None)
+    
+    assert wic_res is not None
+    assert wic_res.status == "Likely Eligible"
+    assert lifeline_res is not None
+    assert lifeline_res.status == "Likely Eligible"
+    assert ccdf_res is not None
+    assert ccdf_res.status == "Likely Eligible"
+
+
