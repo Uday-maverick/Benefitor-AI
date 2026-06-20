@@ -21,6 +21,8 @@ async def extract_profile(request: ProfileExtractRequest):
 async def evaluate(request: EvaluateRequest):
     """Evaluate a profile against all schemes and return match results."""
     results = evaluate_all_schemes(request.profile)
+    # Slice to return only top 5 best schemes
+    results = results[:5]
     lang = request.lang or "en"
     if lang == "en":
         return results

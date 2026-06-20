@@ -140,6 +140,9 @@ async def chat(request: ChatRequest):
         translate_match_result(r, lang)
         for r in results
     ]
+    # Slice to return only top 5 best schemes
+    translated_results = translated_results[:5]
+
 
     # ── 6. Build chat reply — template only, zero LLM ────────────────────────
     reply = build_chat_reply_translated(
