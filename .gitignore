@@ -84,3 +84,7 @@ backend/step_594_content.txt
 backend/step_595_content.txt
 backend/step_595_tool_call_0.txt
 backend/step_605_content.txt
+
+# Scratch folder
+backend/scratch/
+
