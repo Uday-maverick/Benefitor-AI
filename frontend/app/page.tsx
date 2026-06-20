@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import ChatInterface from "@/components/ChatInterface";
 import ResultsPanel from "@/components/ResultsPanel";
 import LanguagePicker from "@/components/LanguagePicker";
@@ -9,11 +10,33 @@ import { t } from "@/lib/i18n";
 import Link from "next/link";
 import { LayoutList, RotateCcw } from "lucide-react";
 
+const TAB_TRANSLATIONS: Record<string, { chat: string; results: string }> = {
+  en: { chat: "Chat", results: "Results" },
+  hi: { chat: "बातचीत", results: "परिणाम" },
+  bn: { chat: "চ্যাট", results: "ফলাফল" },
+  ta: { chat: "உரையாடல்", results: "முடிவுகள்" },
+  te: { chat: "చాట్", results: "ఫలితాలు" },
+  mr: { chat: "संभाषण", results: "निकाल" },
+  gu: { chat: "વાતચીत", results: "પરિણામો" },
+  pa: { chat: "ਗੱਲਬਾਤ", results: "ਨਤੀਜੇ" },
+};
+
 export default function Home() {
   const { lang } = useLang();
   const tr = t(lang);
   const { recommendations, profile, isLoading, handleResponse, setIsLoading, clearChat, messages } =
     useChat();
+  const [activeTab, setActiveTab] = useState<"chat" | "results">("chat");
+
+  const tabs = TAB_TRANSLATIONS[lang] || TAB_TRANSLATIONS.en;
+
+  const handleResponseWithTabSwitch = (response: any) => {
+    handleResponse(response);
+    // Switch to results tab on mobile screen when schemes are matched
+    if (response.recommendations && response.recommendations.length > 0) {
+      setActiveTab("results");
+    }
+  };
 
   return (
     <div
@@ -66,7 +89,10 @@ export default function Home() {
         <nav className="flex items-center gap-2">
           {messages.length > 0 && (
             <button
-              onClick={clearChat}
+              onClick={() => {
+                clearChat();
+                setActiveTab("chat");
+              }}
               className="nav-link flex items-center gap-1.5"
               title="Start a new conversation"
             >
@@ -93,15 +119,60 @@ export default function Home() {
         </nav>
       </header>
 
+      {/* Mobile Tab Toggle Bar */}
+      <div
+        className="flex-shrink-0 flex md:hidden"
+        style={{
+          borderBottom: "1.5px solid hsl(var(--border))",
+          background: "hsl(var(--s1))",
+        }}
+      >
+        <button
+          onClick={() => setActiveTab("chat")}
+          className="flex-1 py-3 text-center text-sm font-semibold transition-all border-b-2"
+          style={{
+            borderColor: activeTab === "chat" ? "hsl(var(--blue))" : "transparent",
+            color: activeTab === "chat" ? "hsl(var(--blue))" : "hsl(var(--tx-2))",
+          }}
+        >
+          {tabs.chat}
+        </button>
+        <button
+          onClick={() => setActiveTab("results")}
+          className="flex-1 py-3 text-center text-sm font-semibold transition-all border-b-2 relative"
+          style={{
+            borderColor: activeTab === "results" ? "hsl(var(--blue))" : "transparent",
+            color: activeTab === "results" ? "hsl(var(--blue))" : "hsl(var(--tx-2))",
+          }}
+        >
+          {tabs.results}
+          {recommendations.length > 0 && (
+            <span
+              className="absolute top-2.5 right-6 w-4.5 h-4.5 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-current"
+              style={{
+                background: "hsl(var(--blue))",
+                color: "white",
+              }}
+            >
+              {recommendations.length}
+            </span>
+          )}
+        </button>
+      </div>
+
       {/* ── Main split ─────────────────────────────────────────────────── */}
       <main className="flex-1 flex overflow-hidden min-h-0">
         {/* Chat */}
         <div
-          className="flex-1 flex flex-col min-w-0"
-          style={{ borderRight: "1.5px solid hsl(var(--border))" }}
+          className={`flex-1 flex-col min-w-0 ${
+            activeTab === "chat" ? "flex" : "hidden md:flex"
+          }`}
+          style={{
+            borderRight: "1.5px solid hsl(var(--border))",
+          }}
         >
           <ChatInterface
-            onResponse={handleResponse}
+            onResponse={handleResponseWithTabSwitch}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
@@ -109,8 +180,9 @@ export default function Home() {
 
         {/* Results sidebar */}
         <div
-          className="flex-shrink-0 flex flex-col overflow-hidden"
-          style={{ width: "390px" }}
+          className={`flex-shrink-0 flex-col overflow-hidden ${
+            activeTab === "results" ? "flex w-full" : "hidden md:flex md:w-[390px]"
+          }`}
         >
           <ResultsPanel
             recommendations={recommendations}
