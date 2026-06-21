@@ -6,18 +6,6 @@ Benefitor AI helps citizens discover government welfare schemes they may qualify
 
 ---
 
-## 🏆 Hackathon Submission Details
-
-**Submission Deadline:** June 21, 2026, 11:59 PM ET
-
-* **Valid Qualifier Approval Code:** `[INSERT YOUR QUALIFIER CODE HERE]`
-* **Track and Challenge Selection:** `[INSERT TRACK AND CHALLENGE SELECTION HERE]`
-* **Project Description:** Benefitor AI is an intelligent welfare navigator that translates conversational user profiles into matched government scheme recommendations with explanation-driven transparency.
-* **Pitch Video (3-5 minutes):** `[INSERT YOUR YOUTUBE/VIMEO/PITCH VIDEO LINK HERE]`
-* **Working Demo/Walkthrough:** `[INSERT YOUR WORKING DEMO LINK OR PORTAL URL HERE]`
-
----
-
 ## 🏗️ AI & Systems Architecture
 
 ### 1. Hybrid AI Architecture
