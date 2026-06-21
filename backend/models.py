@@ -1,5 +1,5 @@
 """
-Pydantic data models for Benefitor AI.
+Pydantic data models for Midas Ledger - Benefitor AI.
 """
 from typing import Optional
 from pydantic import BaseModel, Field

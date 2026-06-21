@@ -4,13 +4,13 @@ import { LanguageProvider } from "@/lib/LanguageContext";
 import { ChatProvider } from "@/lib/ChatContext";
 
 export const metadata: Metadata = {
-  title: "Benefitor AI — Welfare Benefits Navigator",
+  title: "Midas Ledger - Benefitor AI — Welfare Benefits Navigator",
   description:
     "AI-powered welfare benefits navigator for Indian citizens. Discover government schemes you qualify for through natural conversation — in your language.",
   keywords:
     "welfare schemes, government benefits, India, PM-KISAN, PMAY, Ayushman Bharat, scholarships, pension, hindi, telugu, tamil, bengali",
   openGraph: {
-    title: "Benefitor AI",
+    title: "Midas Ledger - Benefitor AI",
     description:
       "Discover government welfare schemes you qualify for — powered by AI, in your language.",
     type: "website",

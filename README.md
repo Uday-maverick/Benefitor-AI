@@ -1,15 +1,15 @@
-# Benefitor AI 🇮🇳
+# Midas Ledger - Benefitor AI 🇮🇳
 
 > Explainable AI Welfare Benefits Navigator for Indian Citizens — Built for Social Impact.
 
-Benefitor AI helps citizens discover government welfare schemes they may qualify for through simple, natural conversations. By combining Large Language Models (LLMs) with a deterministic, rule-based eligibility engine, Benefitor AI delivers clear, trustworthy, and explainable benefit recommendations in 8 Indian languages.
+Midas Ledger - Benefitor AI helps citizens discover government welfare schemes they may qualify for through simple, natural conversations. By combining Large Language Models (LLMs) with a deterministic, rule-based eligibility engine, Midas Ledger - Benefitor AI delivers clear, trustworthy, and explainable benefit recommendations in 8 Indian languages.
 
 ---
 
 ## 🏗️ AI & Systems Architecture
 
 ### 1. Hybrid AI Architecture
-Benefitor AI utilizes a **Hybrid AI Architecture** split into distinct execution layers to ensure both conversational intelligence and absolute rule safety:
+Midas Ledger - Benefitor AI utilizes a **Hybrid AI Architecture** split into distinct execution layers to ensure both conversational intelligence and absolute rule safety:
 * **Conversational Parsing (LLM Layer):** Uses Google Gemini (`gemini-3.5-flash` via the official `google-genai` SDK) to parse free-text natural language queries into a structured `UserProfile` object (e.g. extracting age, income, state, student status, housing type).
 * **Deterministic Matching (Eligibility Engine):** A rule-based evaluation engine written in Python matching the user profile against simulated government criteria. This eliminates LLM hallucination in determining eligibility.
 * **Explanation Generation (Empathetic AI):** When enabled by an API key, Gemini transforms raw match criteria scores and missing guidelines into contextualized, localized, and empathetic explanations and step-by-step application instructions.

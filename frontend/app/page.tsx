@@ -70,7 +70,7 @@ export default function Home() {
               className="font-bold text-base"
               style={{ color: "hsl(var(--tx))", letterSpacing: "-0.015em" }}
             >
-              Benefitor AI
+              Midas Ledger - Benefitor AI
             </span>
             <span
               className="hidden sm:inline text-xs ml-2 px-2 py-0.5 rounded-full"

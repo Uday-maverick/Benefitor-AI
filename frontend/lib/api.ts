@@ -1,4 +1,4 @@
-// API client for Benefitor AI backend
+// API client for Midas Ledger - Benefitor AI backend
 
 import type { ChatMessage, ChatResponse, Scheme, UserProfile, MatchResult } from "./types";
 

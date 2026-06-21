@@ -1,5 +1,5 @@
 """
-Benefitor AI — FastAPI Application Entry Point
+Midas Ledger - Benefitor AI — FastAPI Application Entry Point
 """
 import os
 import logging
@@ -36,12 +36,12 @@ async def lifespan(app: FastAPI):
     else:
         logger.info("✅ Gemini API key detected — AI explanations enabled.")
     yield
-    logger.info("Benefitor AI backend shutting down.")
+    logger.info("Midas Ledger - Benefitor AI backend shutting down.")
 
 
 # ─── App ──────────────────────────────────────────────────────────────────────
 app = FastAPI(
-    title="Benefitor AI API",
+    title="Midas Ledger - Benefitor AI API",
     description="Explainable AI welfare benefits navigator for Indian citizens",
     version="1.0.0",
     lifespan=lifespan,
@@ -66,7 +66,7 @@ app.include_router(evaluate_router, prefix="/api", tags=["Evaluation"])
 async def root():
     return {
         "status": "ok",
-        "service": "Benefitor AI",
+        "service": "Midas Ledger - Benefitor AI",
         "version": "1.0.0",
         "docs": "/docs",
     }

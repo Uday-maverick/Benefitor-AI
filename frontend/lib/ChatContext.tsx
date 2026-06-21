@@ -26,7 +26,7 @@ interface ChatContextValue extends ChatState {
   clearChat: () => void;
 }
 
-const STORAGE_KEY = "benefitor-chat-state";
+const STORAGE_KEY = "midas-ledger-chat-state";
 
 const ChatContext = createContext<ChatContextValue | null>(null);
 

@@ -16,7 +16,7 @@ def test_root():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
-    assert response.json()["service"] == "Benefitor AI"
+    assert response.json()["service"] == "Midas Ledger - Benefitor AI"
 
 def test_schemes_list():
     response = client.get("/api/schemes")
@@ -290,7 +290,7 @@ def test_greeting_on_empty_profile():
     from i18n import build_chat_reply_translated
     profile = UserProfile()
     reply = build_chat_reply_translated(profile, [], [], False, lang="en")
-    assert "Hello!" in reply or "Benefitor AI" in reply
+    assert "Hello!" in reply or "Midas Ledger" in reply
 
 def test_unsupported_country_route_localized(monkeypatch):
     async def mock_extract(text):

@@ -161,7 +161,7 @@ export default function SchemesPage() {
             className="text-sm font-semibold no-underline"
             style={{ color: "hsl(var(--tx))" }}
           >
-            Benefitor AI
+            Midas Ledger - Benefitor AI
           </Link>
         </div>
         <span style={{ color: "hsl(var(--border-hi))" }}>/</span>

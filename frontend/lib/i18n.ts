@@ -1,5 +1,5 @@
 /**
- * Indian language translations for Benefitor AI.
+ * Indian language translations for Midas Ledger - Benefitor AI.
  * Covers the 7 most widely spoken Indian languages + English.
  */
 

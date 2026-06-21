@@ -18,13 +18,13 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   // Persist language choice in localStorage
   useEffect(() => {
-    const saved = localStorage.getItem("benefitor_lang") as LangCode | null;
+    const saved = localStorage.getItem("midas_ledger_lang") as LangCode | null;
     if (saved) setLangState(saved);
   }, []);
 
   const setLang = (l: LangCode) => {
     setLangState(l);
-    localStorage.setItem("benefitor_lang", l);
+    localStorage.setItem("midas_ledger_lang", l);
   };
 
   return (
